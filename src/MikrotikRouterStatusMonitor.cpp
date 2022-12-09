@@ -2,18 +2,21 @@
 
 using namespace network_status_monitoring;
 
-MikrotikRouterStatusMonitor::MikrotikRouterStatusMonitor()
-{
-    RestClient::init();
-};
+MikrotikRouterStatusMonitor::MikrotikRouterStatusMonitor(){};
 
 MikrotikRouterStatusMonitor::~MikrotikRouterStatusMonitor()
+{
+    disableClient();
+}
+
+void MikrotikRouterStatusMonitor::disableClient()
 {
     RestClient::disable();
 }
 
 void MikrotikRouterStatusMonitor::setup(MikrotikRouterStatusMonitorConfig const& config)
 {
+    RestClient::init();
     std::string stats_url = "https://" + config.router_ip + "/rest/interface/print/stats";
     m_stats_connection = setupConnection(stats_url, config.user, config.password);
 

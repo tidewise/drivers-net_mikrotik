@@ -17,6 +17,8 @@ namespace network_status_monitoring {
 
         MikrotikRouterStatusResponse update();
 
+        void disableClient();
+
     private:
         RestClient::Connection* m_stats_connection = nullptr;
         RestClient::Connection* m_details_connection = nullptr;

@@ -1,7 +1,7 @@
-rock_library(net_mikrotik
-    SOURCES Dummy.cpp
-    HEADERS Dummy.hpp)
-
-rock_executable(net_mikrotik_bin Main.cpp
-    DEPS net_mikrotik)
+rock_library(network_status_monitoring
+    SOURCES MikrotikRouterStatusMonitor.cpp
+    HEADERS MikrotikRouterStatusMonitor.hpp
+    MikrotikRouterStatusMonitorConfig.hpp
+    MikrotikRouterStatusResponse.hpp
+    DEPS_PKGCONFIG restclient-cpp base-types jsoncpp)
 
