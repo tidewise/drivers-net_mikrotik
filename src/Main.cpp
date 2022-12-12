@@ -1,10 +1,9 @@
 #include <iostream>
-#include <network_status_monitoring/Dummy.hpp>
+#include <network_status_monitoring/SatcommsStatus.hpp>
 
 int main(int argc, char** argv)
 {
-    network_status_monitoring::DummyClass dummyClass;
-    dummyClass.welcome();
+    network_status_monitoring::SatcommsStatusClass satcommsStatusClass;
 
     return 0;
 }

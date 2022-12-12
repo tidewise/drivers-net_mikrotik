@@ -1,0 +1,764 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache" />
+<title>192.168.6.1 TracPhone V7-HTS</title>
+
+<link href="../css/styles.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+function OpenCommissioningWindow() {
+  var port = '50010';
+  var hostname = document.location.hostname;
+  var url = 'http://' + hostname + ':' + port + '/#/commissioning-wizard';
+  var docname = 'commissioning';
+  var features = 'status=yes,menubar=yes,scrollbars=yes,resizable=yes,width=1200,height=800';
+
+  window.open(url, docname, features);
+}
+</script>
+
+<link href="../YUI/2.9/build/fonts/fonts-min.css" rel="stylesheet" type="text/css">
+<link href="../YUI/2.9/build/menu/assets/skins/sam/menu.css" rel="stylesheet" type="text/css">
+<script src="../YUI/2.9/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="../YUI/2.9/build/container/container_core-min.js" type="text/javascript"></script>
+<script src="../YUI/2.9/build/menu/menu-min.js" type="text/javascript"></script>
+<script type="text/xml">
+<!--
+<oa:widgets>
+  <oa:widget wid="2567022" binding="#OAWidget" />
+</oa:widgets>
+-->
+</script>
+
+<script type='text/javascript' src='js/j-query.js'></script><script type='text/javascript' src='js/nav.js'></script><script type='text/javascript' src='js/support.js'></script><script type='text/javascript' src='js/error_key.js'></script><script type='text/javascript' src='js/login_popup.js'></script><link href='css/dialog.css' rel='stylesheet' type='text/css'></link><link href='themes/base/jquery.ui.all.css' rel='stylesheet' type='text/css'></link><script type='text/javascript' src='js/jquery.ui.core.js'></script><script type='text/javascript' src='js/jquery.ui.widget.js'></script><script type='text/javascript' src='js/jquery.ui.button.js'></script><script type='text/javascript' src='js/jquery.ui.position.js'></script><script type='text/javascript' src='js/jquery.ui.dialog.js'></script><script type='text/javascript' src='js/jquery.effects.core.js'></script><script type='text/javascript' src='js/jquery.effects.scale.js'></script><script type='text/javascript' src='js/balloontip.js'></script>
+</head>
+
+<body>
+
+<style>
+
+.yui-skin-sam .yui-menu-shadow-visible {
+  background-color: transparent;
+  opacity:0;
+}
+
+.yui-menu-shadow-visible {
+  top:2px;
+  right:-3px;
+  left:2px;
+  bottom:-3px;
+}
+
+/* this is the background hover color of the sub menus */
+.yui-skin-sam .yuimenuitem-selected {
+  background-color:#A9C5DD;
+}   
+
+/* this is the color of the sub menu items text */
+.yui-skin-sam .yuimenuitemlabel {
+  color:#000;
+}
+
+.yui-skin-sam .yuimenuitemlabel-disabled {
+  color:#A6A6A6;
+}
+
+.yui-skin-sam .yuimenu {
+  font-size:12px;
+}
+
+/* this is the background color and border of the whole submenu */
+.yui-skin-sam .yuimenu .bd {
+  background-color: #d6d6d6;
+  border: 0px;
+  margin-left:20px;
+} 
+  
+  
+  </style>
+
+<div id="header-image" style="background-image:url(../images/v7hts_header_image.jpg)">
+
+<div id="container">
+
+<div id="logout" class="hideThis" ><a href="#" onclick="logOut()">Logout</a><br />You are logged in as the adminstrator.</div>
+<div id="login"  ><a href="#" onclick="logIn()">Login</a><br />You are not logged in.</div>
+
+<div id="nav">
+    <ul>
+        <li><a href="index.html"><img src="../images/icon_home.png" alt="Home" width="35" height="32" border="0" align="absmiddle" /> Home</a></li>
+        <li><a href="settings.html"><img src="../images/icon_settings.png" alt="Settings" width="31" height="32" border="0" align="absmiddle" /> Settings</a></li>
+        <li id="current"><a href="#"><img src="../images/icon_support.png" alt=" Settings" width="33" height="32" border="0" align="absmiddle" /> Support</a></li>
+        <li><a href="updates.html"><img src="../images/icon_updates.png" alt="Updates " width="26" height="32" border="0" align="absmiddle" /> Updates</a></li>
+        <li id="commbox"><a href="commbox.html"><img src="../images/icon_commbox.png" width="56" height="32" border="0" align="absmiddle" /> CommBox</a></li>
+    </ul>
+</div>
+
+<div id="nav-2">
+    <!--ul style="margin-left:206px;">
+        <li id="current-2"><a href="#">Support Home</a></li>
+        <li><a href="support_plan.html">My Service Plan</a></li>
+        <li><a href="support_advanced.html">Advanced</a></li>
+    </ul-->
+</div>
+
+<div id="content">
+  <table width="1000" border="0" cellspacing="20" cellpadding="0">
+    <tr>
+      <td colspan="3" align="left" valign="top"><span class="h1">Support:</span><span class="h2"> Home</span></td>
+      </tr>
+    <tr>
+      <td colspan="3" align="left" valign="top"><table width="100%" border="0" cellspacing="2" cellpadding="3">
+        <tr>
+          <td width="41%" align="left" valign="top"><p class="h2-home">Support Help<br /></p>
+          
+          <!---- this is the Support Help table ----->
+          
+            <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                <tr>
+                <td width="150px" align="center" valign="middle" bgcolor="#f3f3f3"><img src="../images/icon_support_restart.jpg" alt="" width="46" height="50" style="padding-top:5px;padding-left:10px;" border="0" /></td>
+                <td width="86px" align="center" valign="middle" bgcolor="#f3f3f3"><img src="../images/icon_support_help.jpg" alt="" width="46" height="50" hborder="0" style="padding-top:5px;padding-left:25px;" /></td>
+                <td width="140px" align="center" valign="middle" bgcolor="#f3f3f3"><img src="../images/icon_support_logs.jpg" alt="" width="37" height="50" style="padding-top:5px;" border="0" /></td>
+                </tr>
+                <tr>
+                <td colspan="3" bgcolor="#f3f3f3" style="text-align:right;">
+                  
+                <div id="OAWidget" class="yuimenubar yuimenubarnav">
+                  
+                  <div class="bd">
+                    
+                    <ul class="first-of-type">
+                      <li class="yuimenubaritem first-of-type" style="width:150px;"><a class="yuimenubaritemlabel" style="text-align:right" href="#"><strong>Restart Hardware</strong></a>
+                        <div class="yuimenu">
+                          <div class="bd">
+                            <ul>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="restartAnt">Restart Antenna</a></li>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="restartMTA">Restart MTA</a></li>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="restartAll">Restart All</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                      
+                      <li class="yuimenubaritem" style="width:87px; text-align:right"><a class="yuimenubaritemlabel" style="text-align:right" href="#"><strong>Help</strong></a>
+                        <div class="yuimenu">
+                          <div class="bd">
+                            <ul>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="help/V7HTS_ICM/index.htm" target="_blank">Condensed</a></li>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="extendedHelp">Extended</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                      
+                      <li class="yuimenubaritem" style="width:130px; text-align:right"><a class="yuimenubaritemlabel" style="text-align:right" href="#"><strong>System Logs</strong></a>
+                        <div class="yuimenu">
+                          <div class="bd">
+                            <ul>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="operationalLog">Operational Log</a></li>
+                              <li class="yuimenuitem"><a class="yuimenuitemlabel" href="#" id="eventLog">Event Log</a></li>
+                            </ul>
+                          </div>
+                      </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                
+                </td>
+                </tr>
+                </table>
+                
+                <!---- End Support Help table ----->
+                
+                <script type="text/javascript">
+                // BeginOAWidget_Instance_2567022: #OAWidget
+                 
+                (function() { 
+                  var cn = document.body.className.toString();
+                  if (cn.indexOf('yui-skin-sam') == -1) {
+                    document.body.className += " yui-skin-sam";
+                  }
+                })();
+                
+                var initOAWidget = function() {
+                  /*
+                       Instantiate a Menu:  The first argument passed to the 
+                       constructor is the id of the element in the page 
+                       representing the Menu; the second is an object literal 
+                       of configuration properties.
+                  */
+                
+                  var OAWidget = new YAHOO.widget.MenuBar("OAWidget",  { autosubmenudisplay: true, lazyload: true } );
+                    
+                  OAWidget.render();
+                };
+                
+                // Create the YUI Menu when the HTML document is usable.
+                YAHOO.util.Event.onDOMReady(initOAWidget);
+                // EndOAWidget_Instance_2567022
+                </script>
+                            
+            
+            </td>
+          <td width="2%" align="left" valign="top" class="h2-home">&nbsp;</td>
+          <td class="hideThis" width="57%" align="left" valign="top"></td>
+          <td  width="57%" align="left" valign="top">
+            <span class="h2-home">Remote Help Controls</span>
+            <br />
+            <table width="100%" border="0" cellspacing="2" cellpadding="5">
+              <tr>
+                <td id="cell_modem_status_msg" bgcolor="#D6D6D6" class="h3" >No Session in Progress</td>
+              </tr>
+              <tr id="remoteConnected" class="hideThis" >
+                <td bgcolor="#f3f3f3">
+                  A KVH technician is now connected to your system. Please do not modify any settings while the session is active. KVH will notify you when the session has ended.
+                    <p class="footnote">Note: Standard airtime rates apply</p>
+                </td>
+              </tr>
+              <tr id="remoteNotConnected"  >
+                <td bgcolor="#f3f3f3">
+                  A KVH technician might be able to diagnose a problem and modify system settings over the air using your system&#146;s built-in remote support module. Click <a href="#" id="contactInfo">here</a> to contact KVH Technical Support for assistance.
+                    <p class="footnote">Note: Standard airtime rates apply</p>
+                </td>
+              </tr>
+            </table>
+              <div class="hideThis" id="dialog-confirm4" title="KVH Technical Support">
+                  <span>
+                  <table width="270" border="0" cellpadding="2" cellspacing="2" class="small-text">
+                      <tr>
+                        <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>Within the Continental U.S.A.</strong></td>
+                      </tr>
+                      <tr>
+                        <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                        <td width="147" align="left" valign="top" bgcolor="#FFFFFF">1 (866) 701-7103</td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>North/South America, Australia</strong></td>
+                      </tr>
+                      <tr>
+                        <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">+1 401 851-3806</td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF"><a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>Europe, Middle East, Asia, Africa</strong></td>
+                        </tr>
+                      <tr>
+                        <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">+45 45 160 180</td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                        <td align="left" valign="top" bgcolor="#FFFFFF">
+                        <a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a>
+                        <input type="hidden" id="system_info" value="System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A" />
+                        <input type="hidden" id="help_files" value="V7HTS"
+                        </td>
+                      </tr>
+                    </table>
+                    </span>
+                </div>
+            </td>
+          </tr>
+        </table>
+        </td>
+      </tr>
+    <tr>
+      <td width="280" align="left" valign="top">
+      <table width="280" border="0" cellpadding="5" cellspacing="2">
+        <tr>
+          <td width="280" align="left" valign="middle" class="h2-home">My VSAT Status</td>
+        </tr>
+        <tr>
+          <td align="left" valign="middle" bgcolor="#E3ECD1" class="h3-green">Connection Status</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#F3F3F3"><span id="online_offline_icon">
+        <img src="../images/icon_lg_x.png" alt="" width="45" height="45" align="left" /></span> <span id="online_offline_state" class="xlarge-text">UNKNOWN</span><br />
+            <table>
+                <tr>
+                  <td width="125px" align="center" valign="middle">SNR: <strong><span id="flrx_snr">-999.99dB</span></strong></td>
+                  <td width="125px" align="center" valign="middle">Skew: <strong><span id="antenna_status_skew">&deg;</span></strong></td>
+                </tr>
+                <tr>
+                  <td align="center" valign="middle">Az: <strong><span id="antenna_status_az">&deg;</span></strong></td>
+                  <td align="center" valign="middle">El: <strong><span id="antenna_status_el">&deg;</span></strong></td>
+                </tr>
+            </table>
+          </td>
+        </tr>
+        <tr  >
+          <td align="left" valign="middle" bgcolor="#E3ECD1"><span class="h3-green">No-Transmit Zones</span></td>
+        </tr>
+        <tr  >
+          <td align="left" valign="middle" bgcolor="#F3F3F3">
+            <span style="text-align:right" id="displayZonesMsg_icon"><img src="../images/bt_alert.png" alt="" width="40" height="40" align="left" /></span>
+            <span id="displayZonesMsg_class" class="xlarge-text_red"><span id="displayZonesMsgLine1">Transmit Enabled</span></span><br />
+            <span id="displayZonesMsgLine2">Ignoring Zone(s)</span>
+            <br />
+            <img src="../images/sm_arrow.png" width="6" height="11" hspace="5" /><a href="settings_hazard.html" class="small-text">Edit Zone Settings</a></td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#E3ECD1" class="h3-green">Antenna State</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#F3F3F3" class="xlarge-text" id="antenna_state">INITIALIZING</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#E3ECD1" class="h3-green">Satellite</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#F3F3F3" class="xlarge-text"><span id="satelliteOrb">0</span></td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#E3ECD1" class="h3-green">Beam</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#F3F3F3" class="xlarge-text"><span id="beamInfo">UNKNOWN-BAND: UNKNOWN</span></td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#E3ECD1" class="h3-green">Frequency</td>
+        </tr>
+        <tr>
+          <td align="left" bgcolor="#F3F3F3" class="xlarge-text"><span id="satellite_dlfreq">UNKNOWN</span></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td bgcolor="#F3F3F3" class="gray-heading">
+              <br />
+              <table width="240" border="0" align="center" cellpadding="2" cellspacing="2" class="small-text">
+                <tr>
+                  <td colspan="2" bgcolor="#D6D6D6"><strong>General Statistics</strong></td>
+                </tr>
+                <tr>
+                  <td width="100" bgcolor="#FFFFFF">Management IP</td>
+                  <td width="119" bgcolor="#FFFFFF">10.107.46.2</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">KVH Support IP</td>
+                  <td bgcolor="#FFFFFF">10.224.48.176</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Latitude</td>
+                  <td bgcolor="#FFFFFF" id="gps_lat">22.9173S</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Longitude</td>
+                  <td bgcolor="#FFFFFF" id="gps_long">43.1707W</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Modem State</td>
+                  <td bgcolor="#FFFFFF" id="modem_state">WAITING_FOR_RX_LOCK</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Last Login</td>
+                  <td bgcolor="#FFFFFF" id="login_last">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td colspan="2" bgcolor="#D6D6D6"><strong>RX Statistics</strong></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">FL State</td>
+                  <td bgcolor="#FFFFFF" id="flrx_state">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">FL Carrier</td>
+                  <td bgcolor="#FFFFFF" id="flrx_carrier">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Composite Power</td>
+                  <td bgcolor="#FFFFFF" id="flrx_power">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#D6D6D6"><strong>TX Statistics</strong></td>
+                  <td bgcolor="#D6D6D6"></td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">RL State</td>
+                  <td bgcolor="#FFFFFF" id="rltx_state">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">RL Carrier</td>
+                  <td bgcolor="#FFFFFF" id="rltx_carrier">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Power</td>
+                  <td bgcolor="#FFFFFF" id="rltx_power">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Initial Power</td>
+                  <td bgcolor="#FFFFFF" id="rltx_powerinitial">UNKNOWN</td>
+                </tr>
+                <tr>
+                  <td bgcolor="#FFFFFF">Max Power</td>
+                  <td bgcolor="#FFFFFF" id="rltx_powermax">UNKNOWN</td>
+                </tr>
+              </table>
+              <div style="margin: 12px">
+                <img src="../images/sm_arrow.png" width="6" height="11" hspace="5" /><a class="small-text" href="#" onclick="OpenCommissioningWindow()">Click here for modem commissioning</a>
+              </div>
+          </td>
+        </tr>
+      </table>
+      </td>
+      <td width="400" align="left" valign="top">
+         <table width="400" border="0" cellspacing="2" cellpadding="5">
+            <tr>
+                <td width="400" class="h2-home">Event History
+                <span style="float:right; font-size:12px; color:#000">
+                  <strong>Events:</strong>
+                    <select id="errorLogsNavAmount">
+                        <option value="5" >5 per page</option>
+                        <option value="10" >10 per page</option>
+                        <option value="20" >20 per page</option>
+                        <option value="50" >50 per page</option>
+                    </select>
+                </span>
+                </td>
+            </tr>
+            <tr>
+              <td colspan="2" bgcolor="#F3F3F3">
+                  <div id="tnet" style='height: 600px; width:400px border: 2px solid #D8D8D8; overflow: auto; font-size:12px; ' ><div style="color:black;"><strong>2022-12-02T18:29:57.903Z ALERT</strong></div><div style="color:black;">  ANTENNA CABLE IS UNWRAPPING. PLEASE WAIT...</div><br /><div style="color:black;"><strong>2022-12-02T21:06:44.350Z ALERT</strong></div><div style="color:black;">  ANTENNA CABLE IS UNWRAPPING. PLEASE WAIT...</div><br /><div style="color:black;"><strong>2022-12-08T11:54:04.932Z ALERT</strong></div><div style="color:black;">  ANTENNA CABLE IS UNWRAPPING. PLEASE WAIT...</div><br /><div style="color:black;"><strong>2022-12-08T13:50:31.104Z ALERT</strong></div><div style="color:black;">  ANTENNA CABLE IS UNWRAPPING. PLEASE WAIT...</div><br /><div style="color:black;"><strong>2022-12-08T16:42:07.502Z    ALARM 123</strong></div><div style="color:black;">  MODEM NOT RESPONDING TO STATUS QUERIES FROM ACU.</div><br /></div>
+                  <br />
+                    
+              </td>
+              <td width="35">
+                  <table width="20"  class="float-right">
+                      <tr>
+                          <td><img src="../images/nav_up_to_limit.png" border="0" align="absmiddle" style='cursor:pointer;' onclick='error_log_nav("navUpToLimit")' /></td>
+                      </tr>
+                      <tr>
+                          <td><img src="../images/nav_up.png" border="0" align="absmiddle" style='cursor:pointer;' onclick='error_log_nav("navUp")' /></td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td>&nbsp;</td>
+                      </tr>
+                      <tr>
+                          <td><img src="../images/nav_down.png" border="0" align="absmiddle" style='cursor:pointer;' onclick='error_log_nav("navDown")' /></td>
+                      </tr>
+                      <tr>
+                          <td><img src="../images/nav_down_to_limit.png" border="0" align="absmiddle" style='cursor:pointer;' onclick='error_log_nav("navDownToLimit")' /></td>
+                      </tr>
+                  </table>
+              </td>
+          </tr>
+          <tr>
+              <td><center><div id="navLog" style="font-weight: bold;">Events 113 to 117</div></center></td>
+          </tr>
+      </table>
+      <div class="hideThis" id="dialog-confirm" title="Restart Antenna?">
+        <table>
+            <tr>
+                <td><img src="./images/icon_yellow_alert.png" alt="Alert" width="62" height="64" border="0" align="absmiddle" /></td>
+                <td>
+                    Are you sure you want to restart the antenna? Voice and data services might be unavailable for up to 10 minutes.
+                </td>
+            </tr>
+        </table>
+      </div> 
+      <div class="hideThis" id="dialog-confirm2" title="Restart MTA?">
+        <table>
+            <tr>
+                <td><img src="./images/icon_yellow_alert.png" alt="Alert" width="62" height="64" border="0" align="absmiddle" /></td>
+                <td>
+                    Are you sure you want to restart the MTA? Voice services might be unavailable for up to 10 minutes.
+                </td>
+            </tr>
+        </table>
+      </div>
+      <div class="hideThis" id="dialog-confirm3" title="Restart All?">
+        <table>
+            <tr>
+                <td><img src="./images/icon_yellow_alert.png" alt="Alert" width="62" height="64" border="0" align="absmiddle" /></td>
+                <td>
+                    Are you sure you want to restart all system components? Voice and data services might be unavailable for up to 10 minutes.
+                </td>
+            </tr>
+        </table>
+      </div>
+      <div class="hideThis" id="dialog-confirm5" title="Operational Log Options">
+        <table width="100%" border="0" cellpadding="10" bgcolor="white" align="top">
+            <tr>
+              <td colspan="2" >&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                <input type="button" id="saveLog" style="width:250px" value="View / Save Operational Log" />
+                <div id="saveLogResult" align="center">&nbsp;</div>
+                </td>
+                <td>Choose this option to open a text version of the Operational Log.</td>
+            </tr>
+            <tr>
+              <td colspan="2" ><hr /></td>
+            </tr>
+            <tr>
+                <td>
+                <input type="button" id="startLogWORestart" style="width:250px" value="Start New Log" />
+                <div id="startLogResult" align="center">&nbsp;</div>
+                </td>
+                <td>Choose this option to delete the existing log and begin recording a new Operational Log.</td>
+            </tr>
+            <tr>
+              <td colspan="2" ><hr /></td>
+            </tr>
+            <tr>
+                <td><input type="button" id="startLogWRestart" style="width:250px" value="Restart System, Start New Log" />
+                <div id="startLogWRestartResult" align="center">&nbsp;</div>
+                </td>
+                <td>Choose this option to restart your antenna and begin recording a new Operational Log that includes startup information.</td>
+            </tr>
+        </table>
+      </div>
+      <div class="hideThis" id="dialog-confirm6" title="Get Extended Help?">
+        <table>
+            <tr>
+                <td><img src="./images/icon_yellow_alert.png" alt="Alert" width="62" height="64" border="0" align="absmiddle" /></td>
+                <td>
+                    Internet access is required to view Extended Help, which resides on KVH&#146;s website. Airtime charges may apply.
+                </td>
+            </tr>
+        </table>
+      </div>
+      </td>
+      <td width="240" align="left" valign="top"><table width="240" border="0" cellspacing="2" cellpadding="5">
+        <tr>
+          <td align="left" valign="middle" class="h2-home">System Details<br /></td>
+        </tr>
+        <tr>
+          <td align="center" valign="top" bgcolor="#F3F3F3" class="gray-heading"><br />
+            <table width="220" border="0" cellpadding="2" cellspacing="2" class="small-text">
+              <tr>
+                <td colspan="2" align="left" valign="top"><strong>Software Versions</strong></td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Operating System</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="os_version">201</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">ICM/Antenna</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="application_version">3061</td>
+              </tr>
+        <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Modem</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="modem_sed_ver">2.0.1.7-2044</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">MTA</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="modem_sscf_ver"> 9.15.34</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">CommBox</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="commbox_ver">1.25.1</td>
+              </tr>
+              <tr>
+                <td height="25" colspan="2" align="left" valign="bottom"><strong>Hardware Information</strong></td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Antenna S/N</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="au_serial_num">220301495</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">ICM S/N</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="acu_serial_num">220301003</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Modem S/N</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="modem_sn">103743</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Modem DID</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="modem_did">335648063</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">MTA MAC Address</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="mta_info_sn">00:10:99:12:88:6a</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="left" valign="middle"  class="h2-home" style="padding-top: 15px!important;">Position Backup Source</td>
+        </tr>
+        <tr >
+          <td align="center" valign="top" bgcolor="#F3F3F3" class="gray-heading"><br />
+            <table width="220" border="0" cellpadding="2" cellspacing="2" class="small-text">
+              <tr>
+                <td colspan="2" align="left" valign="top"><strong>NMEA 0183</strong></td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">State</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="nmea0183_state"></td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Latitude</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="nmea0183_lat">0S</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">Longitude</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF" id="nmea0183_lon">0W</td>
+              </tr>
+              
+            </table>
+          </td>
+        </tr>
+        
+        <tr>
+          <td align="left" valign="top" class="h2-home" style="padding-top: 15px!important;">KVH Technical Support</td>
+        </tr>
+        <tr>
+          <td align="center" valign="top" bgcolor="#F3F3F3" class="gray-heading"><br />
+            <table width="220" border="0" cellpadding="2" cellspacing="2" class="small-text">
+              <tr>
+                <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>Within the Continental U.S.A.</strong></td>
+              </tr>
+              <tr>
+                <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                <td width="147" align="left" valign="top" bgcolor="#FFFFFF">1 (866) 701-7103</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF"><a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a></td>
+              </tr>
+              <tr>
+                <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>North/South America, Australia</strong></td>
+              </tr>
+              <tr>
+                <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF">+1 401 851-3806</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF"><a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a></td>
+              </tr>
+              <tr>
+                <td colspan="2" align="left" valign="top" bgcolor="#D6D6D6"><strong>Europe, Middle East, Asia, Africa</strong></td>
+                </tr>
+              <tr>
+                <td width="59" align="left" valign="top" bgcolor="#FFFFFF">Phone:</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF">+45 45 160 180</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" bgcolor="#FFFFFF">E-mail</td>
+                <td align="left" valign="top" bgcolor="#FFFFFF"><a href="mailto:mvbsupport@kvh.com?Subject=CommBox-ACU Support Request&body=System: V7HTS_ICM%0AACU SN: 220301003%0ACBX SN: 2203U0087%0AManagement IP: 10.107.46.2%0AKVH Support IP: 10.224.48.176%0A">mvbsupport@kvh.com</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table></td>
+    </tr>
+</table>
+
+</div>
+
+<div id="footer">
+      <a href="index.html">Home</a> | <a href="settings.html">Settings</a> | <a href="support.html">Support</a> | <a href="updates.html">Updates</a> | <a href="commbox.html">CommBox</a>
+</div>
+
+</div>
+</div>
+
+<!--login popup divs -->
+<div id="loginPopup" style="display: none;"></div>
+<div id="loginWindow" style="display: none;">
+<div id="login_popup_content" align="left"></div>
+</div>
+<!--end login popup divs -->
+
+<!--popup divs -->
+<div id="popup" style="display: none;"></div>
+<div id="window" style="display: none;">
+<div id="popup_content" align="left"></div>
+</div>
+<!--end popup divs -->
+
+</body>
+</html>
