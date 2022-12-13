@@ -1,5 +1,5 @@
 <package>
-  <description brief="Monitoring libraries for network devices">
+  <description brief="Driver for mikrotik routers">
 
   </description>
   <author>Jhonas Prado Moura/jhonas.moura@tidewise.io</author>
