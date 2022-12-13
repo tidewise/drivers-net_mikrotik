@@ -1,8 +1,8 @@
 #ifndef NET_MIKROTIK_RESTAPI_HPP
 #define NET_MIKROTIK_RESTAPI_HPP
 
-#include "RESTAPIConfig.hpp"
 #include "InterfaceStats.hpp"
+#include "RESTAPIConfig.hpp"
 #include "restclient-cpp/connection.h"
 #include "restclient-cpp/restclient.h"
 #include "json/json.h"
@@ -44,10 +44,6 @@ namespace net_mikrotik {
         std::vector<InterfaceStats> parseInterfaceResponse(
             RestClient::Response const& response);
 
-    private:
-        RestClient::Connection* m_interface_connection = nullptr;
-        Json::Reader m_json_reader{};
-
         /**
          * @brief Sets up the connection object from a given URL, using basic
          * authentication.
@@ -61,6 +57,10 @@ namespace net_mikrotik {
             std::string user,
             std::string password);
 
+    private:
+        RestClient::Connection* m_interface_connection = nullptr;
+        Json::Reader m_json_reader{};
+
         /**
          * @brief Makes the prop list URL parameters from a vector of the
          * desired properties.
@@ -68,7 +68,7 @@ namespace net_mikrotik {
          * @param prop_list the desired properties.
          * @return std::string the parameters to be added to the URL.
          */
-        std::string makePropListParams(std::vector<std::string> prop_list);
+        static std::string makePropListParams(std::vector<std::string> prop_list);
     };
 
 } // end namespace net_mikrotik

@@ -3,6 +3,8 @@
 
 using namespace net_mikrotik;
 using namespace std;
+using namespace base;
+using Resolution = base::Time::Resolution;
 
 RESTAPI::RESTAPI(){};
 
@@ -55,10 +57,10 @@ RestClient::Response RESTAPI::getInterfaceResponse()
         "tx-packet",
         "tx-error",
         "tx-drop",
-        "fp_rx_byte",
-        "fp_rx_packet",
-        "fp_tx_byte",
-        "fp_tx_packet",
+        "fp-rx-byte",
+        "fp-rx-packet",
+        "fp-tx-byte",
+        "fp-tx-packet",
         "running"};
     return m_interface_connection->get(makePropListParams(prop_list));
 }
@@ -68,18 +70,34 @@ std::vector<InterfaceStats> RESTAPI::parseInterfaceResponse(
 {
     std::vector<InterfaceStats> interface_stats;
     Json::Value json_response;
-    m_json_reader.parse(response.body, json_response, false);
+    stringstream(response.body) >> json_response;
 
+    Time timestamp = Time::now();
     for (auto router : json_response) {
         InterfaceStats stats;
-        stats.name = json_response["name"].asString();
-        stats.rx_byte = json_response["rx-byte"].asDouble();
-        stats.rx_packet = json_response["rx-packet"].asDouble();
-        stats.rx_error = json_response["rx-error"].asDouble();
-        stats.rx_drop = json_response["rx-drop"].asDouble();
-        stats.tx_byte = json_response["tx-byte"].asDouble();
-        stats.tx_packet = json_response["tx-packet"].asDouble();
-        stats.tx_queue_drop = json_response["tx-queue-drop"].asDouble();
+        stats.timestamp = timestamp;
+        stats.name = router["name"].asString();
+        stats.actual_mtu = stoul(router["actual-mtu"].asString());
+        stats.link_downs = stoul(router["link-downs"].asString());
+        stats.rx_byte = stoll(router["rx-byte"].asString());
+        stats.rx_packet = stoll(router["rx-packet"].asString());
+        stats.rx_error = stoll(router["rx-error"].asString());
+        stats.rx_drop = stoll(router["rx-drop"].asString());
+        stats.tx_byte = stoll(router["tx-byte"].asString());
+        stats.tx_packet = stoll(router["tx-packet"].asString());
+        stats.tx_error = stoll(router["tx-error"].asString());
+        stats.tx_drop = stoll(router["tx-drop"].asString());
+        stats.tx_queue_drop = stoll(router["tx-queue-drop"].asString());
+        stats.fp_rx_byte = stoll(router["fp-rx-byte"].asString());
+        stats.fp_tx_byte = stoll(router["fp-tx-byte"].asString());
+        stats.fp_rx_packet = stoll(router["fp-rx-packet"].asString());
+        stats.fp_tx_packet = stoll(router["fp-tx-packet"].asString());
+        stats.running = (router["running"].asString() == "true");
+
+        string last_link_up_time_str = router["last-link-up-time"].asString();
+        stats.last_link_up_time = Time::fromString(last_link_up_time_str + "Z",
+            Resolution::Seconds,
+            "%b/%d/%Y %T");
         interface_stats.push_back(stats);
     }
     return interface_stats;
