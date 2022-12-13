@@ -1,7 +1,7 @@
-rock_library(network_status_monitoring
+rock_library(net_mikrotik
     SOURCES Dummy.cpp
     HEADERS Dummy.hpp)
 
-rock_executable(network_status_monitoring_bin Main.cpp
-    DEPS network_status_monitoring)
+rock_executable(net_mikrotik_bin Main.cpp
+    DEPS net_mikrotik)
 

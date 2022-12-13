@@ -1,11 +1,11 @@
 #ifndef _DUMMYPROJECT_DUMMY_HPP_
 #define _DUMMYPROJECT_DUMMY_HPP_
 
-namespace network_status_monitoring
+namespace net_mikrotik
 {
     class DummyClass
     {
-        public: 
+        public:
             /**
              * Print a welcome to stdout
              * \return nothing
@@ -13,6 +13,6 @@ namespace network_status_monitoring
             void welcome();
     };
 
-} // end namespace network_status_monitoring
+} // end namespace net_mikrotik
 
 #endif // _DUMMYPROJECT_DUMMY_HPP_

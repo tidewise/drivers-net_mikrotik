@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-using namespace network_status_monitoring;
+using namespace net_mikrotik;
 
 void DummyClass::welcome()
 {

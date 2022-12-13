@@ -1,7 +1,7 @@
 # CMakeLists.txt has to be located in the project folder and cmake has to be
 # executed from 'project/build' with 'cmake ../'.
 cmake_minimum_required(VERSION 3.9)
-project(network_status_monitoring
+project(net_mikrotik
         VERSION 0.1
         DESCRIPTION "Monitoring libraries for network devices")
 find_package(Rock)

@@ -1,10 +1,10 @@
 #include <boost/test/unit_test.hpp>
-#include <network_status_monitoring/Dummy.hpp>
+#include <net_mikrotik/Dummy.hpp>
 
-using namespace network_status_monitoring;
+using namespace net_mikrotik;
 
 BOOST_AUTO_TEST_CASE(it_should_not_crash_when_welcome_is_called)
 {
-    network_status_monitoring::DummyClass dummy;
+    net_mikrotik::DummyClass dummy;
     dummy.welcome();
 }

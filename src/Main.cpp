@@ -1,9 +1,9 @@
 #include <iostream>
-#include <network_status_monitoring/Dummy.hpp>
+#include <net_mikrotik/Dummy.hpp>
 
 int main(int argc, char** argv)
 {
-    network_status_monitoring::DummyClass dummyClass;
+    net_mikrotik::DummyClass dummyClass;
     dummyClass.welcome();
 
     return 0;
