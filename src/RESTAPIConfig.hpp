@@ -6,10 +6,9 @@
 namespace net_mikrotik {
     struct RESTAPIConfig {
         std::string router_ip;
-
         std::string user;
-
         std::string password;
+        int timeout = 0;
     };
 }
 

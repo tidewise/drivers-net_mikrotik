@@ -41,7 +41,7 @@ namespace net_mikrotik {
          * @param response the response from the interface URL.
          * @return std::vector<InterfaceStats>
          */
-        std::vector<InterfaceStats> parseInterfaceResponse(
+        static std::vector<InterfaceStats> parseInterfaceResponse(
             RestClient::Response const& response);
 
         /**
@@ -49,13 +49,11 @@ namespace net_mikrotik {
          * authentication.
          *
          * @param url the url to connect to.
-         * @param user the username
-         * @param password the user's password
+         * @param config the rest api config
          * @return RestClient::Connection*
          */
-        static RestClient::Connection* setupConnection(std::string url,
-            std::string user,
-            std::string password);
+        static RestClient::Connection* setupConnection(std::string const& url,
+            RESTAPIConfig const& config);
 
     private:
         RestClient::Connection* m_interface_connection = nullptr;
@@ -68,7 +66,91 @@ namespace net_mikrotik {
          * @param prop_list the desired properties.
          * @return std::string the parameters to be added to the URL.
          */
-        static std::string makePropListParams(std::vector<std::string> prop_list);
+        static std::string makePropListParams(std::vector<std::string> const& prop_list);
+
+        /**
+         * @brief Throws whenever the response json doesnt contain a field with
+         * field_name.
+         *
+         * @param json the response json
+         * @param field_name the field to search for.
+         * @throw runtime_error
+         */
+        static void throwOnInvalidFieldName(Json::Value const& json,
+            std::string const& field_name);
+
+        /**
+         * @brief Throws whenever the response code is different from 200. We
+         * treat any other code as failure, since all we do is a GET request.
+         *
+         * @param response the rest client response
+         * @param json_response the response parsed into json
+         * @throw runtime_error
+         */
+        static void throwOnRequestFailure(RestClient::Response const& response,
+            Json::Value const& json_response);
+
+        /**
+         * @brief Generates the error message when parsing a field failed.
+         *
+         * @param field_name the name of the field that failed during parsing.
+         * @param value the value that we tried to parse.
+         * @param error_message the error message caught
+         * @return std::string a detailed error message
+         */
+        static std::string detailedParsingErrorMessage(std::string const& field_name,
+            std::string const& value,
+            std::string const& error_message);
+
+        /**
+         * @brief Parses a string value read from a json field into uint32_t.
+         *
+         * @param json the json data.
+         * @param field_name the name of the field to read from.
+         * @return uint32_t the parsed value.
+         */
+        static uint32_t parseUnsignedField(Json::Value const& json,
+            std::string const& field_name);
+
+        /**
+         * @brief Parses a string value read from a json field into int32_t.
+         *
+         * @param json the json data.
+         * @param field_name the name of the field to read from.
+         * @return int32_t the parsed value.
+         */
+        static int32_t parseInt32Field(Json::Value const& json,
+            std::string const& field_name);
+
+        /**
+         * @brief Parses a string value read from a json field into int64_t.
+         *
+         * @param json the json data.
+         * @param field_name the name of the field to read from.
+         * @return int64_t the parsed value.
+         */
+        static int64_t parseInt64Field(Json::Value const& json,
+            std::string const& field_name);
+
+        /**
+         * @brief Parses a string value read from a json field into bool.
+         *
+         * @param json the json data.
+         * @param field_name the name of the field to read from.
+         * @return bool the parsed value.
+         */
+        static bool parseBooleanField(Json::Value const& json,
+            std::string const& field_name);
+
+        /**
+         * @brief Parses a string value read from a json field into base::Time.
+         *
+         * @param json the json data.
+         * @param field_name the name of the field to read from.
+         * @return base::Time the parsed value.
+         */
+        static base::Time parseTimeField(Json::Value const& json,
+            std::string const& field_name);
     };
 
 } // end namespace net_mikrotik

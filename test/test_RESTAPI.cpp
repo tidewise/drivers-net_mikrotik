@@ -88,13 +88,16 @@ TEST_F(RESTAPITest, it_is_able_to_establish_a_connection_to_google)
     RestClient::init();
     auto api = RESTAPI();
 
-    auto* connection = api.setupConnection("www.google.com", "", "");
+    RESTAPIConfig config;
+    config.timeout = 1;
+
+    auto* connection = api.setupConnection("www.google.com", config);
     auto response = connection->get("");
     ASSERT_EQ(200, response.code);
     RestClient::disable();
 }
 
-TEST_F(RESTAPITest, it_succesfully_parses_a_full_message)
+TEST_F(RESTAPITest, it_succesfully_parses_a_complete_message)
 {
     auto api = RESTAPI();
 
@@ -108,7 +111,7 @@ TEST_F(RESTAPITest, it_succesfully_parses_a_full_message)
     file >> root;
 
     RestClient::Response response;
-    response.code = 0;
+    response.code = 200;
     response.body = writer.write(root);
     auto stats = api.parseInterfaceResponse(response);
 
@@ -116,4 +119,131 @@ TEST_F(RESTAPITest, it_succesfully_parses_a_full_message)
     for (size_t i = 0; i < expected.size(); i++) {
         assertEqualInterfaceStats(expected[i], stats[i]);
     }
+}
+
+TEST_F(RESTAPITest, it_throws_when_an_expected_field_is_not_a_part_of_the_json)
+{
+    auto api = RESTAPI();
+
+    auto resource_dir = getenv("NET_MIKROTIK_RESOURCE_DIR");
+    stringstream rest_responses;
+    rest_responses << resource_dir << "rest_responses.json";
+    ifstream file(rest_responses.str(), ifstream::binary);
+
+    Json::FastWriter writer;
+    Json::Value root;
+    file >> root;
+
+    root[0].removeMember("link-downs");
+
+    RestClient::Response response;
+    response.code = 200;
+    response.body = writer.write(root);
+    ASSERT_THROW(
+        {
+            try {
+                api.parseInterfaceResponse(response);
+            }
+            catch (runtime_error const& e) {
+                ASSERT_STREQ("link-downs is not a valid field in the json structure",
+                    e.what());
+                throw;
+            }
+        },
+        runtime_error);
+}
+
+TEST_F(RESTAPITest, it_throws_when_the_response_failed)
+{
+    auto api = RESTAPI();
+
+    Json::FastWriter writer;
+    Json::Value root;
+    root["error"] = 406;
+    root["message"] = "some error message";
+    root["detail"] = "detailing the error message";
+
+    RestClient::Response response;
+    response.code = 406;
+    response.body = writer.write(root);
+    ASSERT_THROW(
+        {
+            try {
+                api.parseInterfaceResponse(response);
+            }
+            catch (runtime_error const& e) {
+                ASSERT_STREQ(
+                    "Bad response: {\"detail\":\"detailing the error "
+                    "message\",\"error\":406,\"message\":\"some error message\"}\n",
+                    e.what());
+                throw;
+            }
+        },
+        runtime_error);
+}
+
+TEST_F(RESTAPITest, it_throws_when_there_is_an_invalid_parameter)
+{
+    auto api = RESTAPI();
+
+    auto resource_dir = getenv("NET_MIKROTIK_RESOURCE_DIR");
+    stringstream rest_responses;
+    rest_responses << resource_dir << "rest_responses.json";
+    ifstream file(rest_responses.str(), ifstream::binary);
+
+    Json::FastWriter writer;
+    Json::Value root;
+    file >> root;
+
+    root[0]["link-downs"] = "not a valid parameter";
+
+    RestClient::Response response;
+    response.code = 200;
+    response.body = writer.write(root);
+    ASSERT_THROW(
+        {
+            try {
+                api.parseInterfaceResponse(response);
+            }
+            catch (invalid_argument const& e) {
+                ASSERT_STREQ("Error parsing the link-downs field. The value read is not "
+                             "a valid parameter. Got the following message: stoul",
+                    e.what());
+                throw;
+            }
+        },
+        invalid_argument);
+}
+
+TEST_F(RESTAPITest, it_throws_when_there_is_the_value_is_out_of_range)
+{
+    auto api = RESTAPI();
+
+    auto resource_dir = getenv("NET_MIKROTIK_RESOURCE_DIR");
+    stringstream rest_responses;
+    rest_responses << resource_dir << "rest_responses.json";
+    ifstream file(rest_responses.str(), ifstream::binary);
+
+    Json::FastWriter writer;
+    Json::Value root;
+    file >> root;
+
+    root[0]["link-downs"] = "99999999999999999999";
+
+    RestClient::Response response;
+    response.code = 200;
+    response.body = writer.write(root);
+    ASSERT_THROW(
+        {
+            try {
+                api.parseInterfaceResponse(response);
+            }
+            catch (out_of_range const& e) {
+                ASSERT_STREQ("Error parsing the link-downs field. The value read is "
+                             "99999999999999999999. Got the following message: stoul",
+                    e.what());
+                throw;
+            }
+        },
+        out_of_range);
 }
