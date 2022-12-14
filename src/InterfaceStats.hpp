@@ -1,8 +1,8 @@
 #ifndef NET_MIKROTIK_ROUTER_STATUS_RESPONSE_HPP
 #define NET_MIKROTIK_ROUTER_STATUS_RESPONSE_HPP
 
-#include <string>
 #include "base/Time.hpp"
+#include <string>
 
 namespace net_mikrotik {
     struct InterfaceStats {
