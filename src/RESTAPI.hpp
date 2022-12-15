@@ -56,8 +56,26 @@ namespace net_mikrotik {
             RESTAPIConfig const& config);
 
     private:
+        std::vector<std::string> const m_prop_list{"name",
+            "actual-mtu",
+            "last-link-up-time",
+            "link-downs",
+            "rx-byte",
+            "rx-packet",
+            "rx-error",
+            "rx-drop",
+            "tx-byte",
+            "tx-packet",
+            "tx-error",
+            "tx-drop",
+            "tx-queue-drop",
+            "fp-rx-byte",
+            "fp-rx-packet",
+            "fp-tx-byte",
+            "fp-tx-packet",
+            "running"};
+
         RestClient::Connection* m_interface_connection = nullptr;
-        Json::Reader m_json_reader{};
 
         /**
          * @brief Makes the prop list URL parameters from a vector of the
@@ -89,6 +107,14 @@ namespace net_mikrotik {
          */
         static void throwOnRequestFailure(RestClient::Response const& response,
             Json::Value const& json_response);
+        /**
+         * @brief Throws whenever the response code represents a CURL error (<
+         * 100).
+         *
+         * @param response the rest client response
+         * @throw runtime_error
+         */
+        static void throwOnCurlError(RestClient::Response const& response);
 
         /**
          * @brief Generates the error message when parsing a field failed.

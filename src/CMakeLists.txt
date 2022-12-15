@@ -5,3 +5,4 @@ rock_library(net_mikrotik
     InterfaceStats.hpp
     DEPS_PKGCONFIG restclient-cpp base-types jsoncpp)
 
+rock_executable(net_mikrotik_bin Main.cpp DEPS net_mikrotik)

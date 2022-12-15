@@ -31,6 +31,7 @@ RestClient::Connection* RESTAPI::setupConnection(std::string const& url,
     RestClient::HeaderFields headers{};
     headers["content-type"] = "application/json";
     connection->SetHeaders(headers);
+    connection->SetVerifyPeer(false);
 
     return connection;
 }
@@ -47,29 +48,14 @@ string RESTAPI::makePropListParams(vector<string> const& prop_list)
 
 RestClient::Response RESTAPI::getInterfaceResponse()
 {
-    vector<string> prop_list{"name",
-        "actual-mtu",
-        "last-link-up-time",
-        "link-downs",
-        "rx-byte",
-        "rx-packet",
-        "rx-error",
-        "rx-drop",
-        "tx-byte",
-        "tx-packet",
-        "tx-error",
-        "tx-drop",
-        "fp-rx-byte",
-        "fp-rx-packet",
-        "fp-tx-byte",
-        "fp-tx-packet",
-        "running"};
-    return m_interface_connection->get(makePropListParams(prop_list));
+    return m_interface_connection->get(makePropListParams(m_prop_list));
 }
 
 std::vector<InterfaceStats> RESTAPI::parseInterfaceResponse(
     RestClient::Response const& response)
 {
+    throwOnCurlError(response);
+
     std::vector<InterfaceStats> interface_stats;
     Json::Value json_response;
     stringstream(response.body) >> json_response;
@@ -118,6 +104,17 @@ string RESTAPI::detailedParsingErrorMessage(std::string const& field_name,
     message << "Error parsing the " << field_name << " field. The value read is " << value
             << ". Got the following message: " << error_message;
     return message.str();
+}
+
+void RESTAPI::throwOnCurlError(RestClient::Response const& response)
+{
+    if (response.code > 100) {
+        return;
+    }
+
+    stringstream error_message;
+    error_message << "Curl error " << response.code << ": " << response.body;
+    throw runtime_error(error_message.str());
 }
 
 void RESTAPI::throwOnRequestFailure(RestClient::Response const& response,
@@ -186,7 +183,9 @@ bool RESTAPI::parseBooleanField(Json::Value const& json, string const& field_nam
 
 Time RESTAPI::parseTimeField(Json::Value const& json, string const& field_name)
 {
-    throwOnInvalidFieldName(json, field_name);
+    if (!json.isMember(field_name)) {
+        return Time();
+    }
 
     string value = json[field_name].asString();
     try {

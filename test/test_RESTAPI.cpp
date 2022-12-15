@@ -247,3 +247,31 @@ TEST_F(RESTAPITest, it_throws_when_there_is_the_value_is_out_of_range)
         },
         out_of_range);
 }
+
+TEST_F(RESTAPITest, it_doesnt_throw_when_last_link_up_time_field_is_not_present)
+{
+    auto api = RESTAPI();
+
+    auto resource_dir = getenv("NET_MIKROTIK_RESOURCE_DIR");
+    stringstream rest_responses;
+    rest_responses << resource_dir << "rest_responses.json";
+    ifstream file(rest_responses.str(), ifstream::binary);
+
+    Json::FastWriter writer;
+    Json::Value root;
+    file >> root;
+
+    root[0].removeMember("last-link-up-time");
+
+    RestClient::Response response;
+    response.code = 200;
+    response.body = writer.write(root);
+
+    auto expected = getExpectedStats();
+    expected[0].last_link_up_time = base::Time();
+
+    auto actual = api.parseInterfaceResponse(response);
+    for (size_t i = 0; i < expected.size(); i++) {
+        assertEqualInterfaceStats(expected[i], actual[i]);
+    }
+}
