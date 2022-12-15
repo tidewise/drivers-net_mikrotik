@@ -15,6 +15,8 @@ RESTAPI::~RESTAPI()
 
 void RESTAPI::setup(RESTAPIConfig const& config)
 {
+    delete m_interface_connection;
+
     string interface_url = "https://" + config.router_ip + "/rest/interface";
     m_interface_connection = setupConnection(interface_url, config);
 }
@@ -75,33 +77,33 @@ std::vector<InterfaceStats> RESTAPI::parseInterfaceResponse(
     throwOnRequestFailure(response, json_response);
 
     Time timestamp = Time::now();
-    for (auto router : json_response) {
+    for (auto link : json_response) {
         InterfaceStats stats;
         stats.timestamp = timestamp;
 
-        throwOnInvalidFieldName(router, "name");
-        stats.name = router["name"].asString();
+        throwOnInvalidFieldName(link, "name");
+        stats.name = link["name"].asString();
 
-        stats.actual_mtu = parseUnsignedField(router, "actual-mtu");
-        stats.link_downs = parseUnsignedField(router, "link-downs");
+        stats.actual_mtu = parseUint32Field(link, "actual-mtu");
+        stats.link_downs = parseUint32Field(link, "link-downs");
 
-        stats.rx_error = parseInt32Field(router, "rx-error");
-        stats.rx_drop = parseInt32Field(router, "rx-drop");
-        stats.tx_queue_drop = parseInt32Field(router, "tx-queue-drop");
-        stats.tx_error = parseInt32Field(router, "rx-error");
-        stats.tx_drop = parseInt32Field(router, "tx-drop");
+        stats.rx_error = parseUint64Field(link, "rx-error");
+        stats.rx_drop = parseUint64Field(link, "rx-drop");
+        stats.tx_queue_drop = parseUint64Field(link, "tx-queue-drop");
+        stats.tx_error = parseUint64Field(link, "rx-error");
+        stats.tx_drop = parseUint64Field(link, "tx-drop");
 
-        stats.rx_byte = parseInt64Field(router, "rx-byte");
-        stats.rx_packet = parseInt64Field(router, "rx-packet");
-        stats.tx_byte = parseInt64Field(router, "tx-byte");
-        stats.tx_packet = parseInt64Field(router, "tx-packet");
-        stats.fp_rx_byte = parseInt64Field(router, "fp-rx-byte");
-        stats.fp_tx_byte = parseInt64Field(router, "fp-tx-byte");
-        stats.fp_rx_packet = parseInt64Field(router, "fp-rx-packet");
-        stats.fp_tx_packet = parseInt64Field(router, "fp-tx-packet");
+        stats.rx_byte = parseUint64Field(link, "rx-byte");
+        stats.rx_packet = parseUint64Field(link, "rx-packet");
+        stats.tx_byte = parseUint64Field(link, "tx-byte");
+        stats.tx_packet = parseUint64Field(link, "tx-packet");
+        stats.fp_rx_byte = parseUint64Field(link, "fp-rx-byte");
+        stats.fp_tx_byte = parseUint64Field(link, "fp-tx-byte");
+        stats.fp_rx_packet = parseUint64Field(link, "fp-rx-packet");
+        stats.fp_tx_packet = parseUint64Field(link, "fp-tx-packet");
 
-        stats.running = parseBooleanField(router, "running");
-        stats.last_link_up_time = parseTimeField(router, "last-link-up-time");
+        stats.running = parseBooleanField(link, "running");
+        stats.last_link_up_time = parseTimeField(link, "last-link-up-time");
 
         interface_stats.push_back(stats);
     }
@@ -140,7 +142,7 @@ void RESTAPI::throwOnInvalidFieldName(Json::Value const& json, string const& fie
     }
 }
 
-uint32_t RESTAPI::parseUnsignedField(Json::Value const& json, string const& field_name)
+uint32_t RESTAPI::parseUint32Field(Json::Value const& json, string const& field_name)
 {
     throwOnInvalidFieldName(json, field_name);
 
@@ -157,30 +159,13 @@ uint32_t RESTAPI::parseUnsignedField(Json::Value const& json, string const& fiel
     }
 }
 
-int64_t RESTAPI::parseInt64Field(Json::Value const& json, string const& field_name)
+uint64_t RESTAPI::parseUint64Field(Json::Value const& json, string const& field_name)
 {
     throwOnInvalidFieldName(json, field_name);
 
     string value = json[field_name].asString();
     try {
-        return stoll(value);
-    }
-    catch (invalid_argument const& err) {
-        throw invalid_argument(
-            detailedParsingErrorMessage(field_name, value, err.what()));
-    }
-    catch (out_of_range const& err) {
-        throw out_of_range(detailedParsingErrorMessage(field_name, value, err.what()));
-    }
-}
-
-int32_t RESTAPI::parseInt32Field(Json::Value const& json, string const& field_name)
-{
-    throwOnInvalidFieldName(json, field_name);
-
-    string value = json[field_name].asString();
-    try {
-        return stol(value);
+        return stoull(value);
     }
     catch (invalid_argument const& err) {
         throw invalid_argument(

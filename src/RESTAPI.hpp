@@ -109,27 +109,17 @@ namespace net_mikrotik {
          * @param field_name the name of the field to read from.
          * @return uint32_t the parsed value.
          */
-        static uint32_t parseUnsignedField(Json::Value const& json,
+        static uint32_t parseUint32Field(Json::Value const& json,
             std::string const& field_name);
 
         /**
-         * @brief Parses a string value read from a json field into int32_t.
+         * @brief Parses a string value read from a json field into uint64_t.
          *
          * @param json the json data.
          * @param field_name the name of the field to read from.
-         * @return int32_t the parsed value.
+         * @return uint64_t the parsed value.
          */
-        static int32_t parseInt32Field(Json::Value const& json,
-            std::string const& field_name);
-
-        /**
-         * @brief Parses a string value read from a json field into int64_t.
-         *
-         * @param json the json data.
-         * @param field_name the name of the field to read from.
-         * @return int64_t the parsed value.
-         */
-        static int64_t parseInt64Field(Json::Value const& json,
+        static uint64_t parseUint64Field(Json::Value const& json,
             std::string const& field_name);
 
         /**
