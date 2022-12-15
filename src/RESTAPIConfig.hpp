@@ -1,6 +1,7 @@
 #ifndef NET_MIKROTIK_RESTAPI_CONFIG_HPP
 #define NET_MIKROTIK_RESTAPI_CONFIG_HPP
 
+#include "base/Time.hpp"
 #include <string>
 
 namespace net_mikrotik {
@@ -8,7 +9,7 @@ namespace net_mikrotik {
         std::string router_ip;
         std::string user;
         std::string password;
-        int timeout = 0;
+        base::Time timeout;
     };
 }
 
