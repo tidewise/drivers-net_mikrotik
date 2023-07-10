@@ -6,7 +6,7 @@ project(net_mikrotik
         DESCRIPTION "Monitoring libraries for network devices")
 find_package(Rock)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 rock_init()
