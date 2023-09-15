@@ -73,11 +73,11 @@ std::vector<InterfaceStats> RESTAPI::parseInterfaceResponse(
         stats.actual_mtu = parseUint32Field(link, "actual-mtu");
         stats.link_downs = parseUint32Field(link, "link-downs");
 
-        stats.rx_error = parseUint64Field(link, "rx-error");
-        stats.rx_drop = parseUint64Field(link, "rx-drop");
+        stats.rx_error = parseUint64Field(link, "rx-error", 0);
+        stats.rx_drop = parseUint64Field(link, "rx-drop", 0);
         stats.tx_queue_drop = parseUint64Field(link, "tx-queue-drop");
-        stats.tx_error = parseUint64Field(link, "rx-error");
-        stats.tx_drop = parseUint64Field(link, "tx-drop");
+        stats.tx_error = parseUint64Field(link, "rx-error", 0);
+        stats.tx_drop = parseUint64Field(link, "tx-drop", 0);
 
         stats.rx_byte = parseUint64Field(link, "rx-byte");
         stats.rx_packet = parseUint64Field(link, "rx-packet");
@@ -133,10 +133,13 @@ void RESTAPI::throwOnRequestFailure(RestClient::Response const& response,
 void RESTAPI::throwOnInvalidFieldName(Json::Value const& json, string const& field_name)
 {
     if (!json.isMember(field_name)) {
-        stringstream error_message;
-        error_message << field_name << " is not a valid field in the json structure";
-        throw runtime_error(error_message.str());
+        throwFieldNameInvalid(field_name);
     }
+}
+
+void RESTAPI::throwFieldNameInvalid(string const& field_name)
+{
+    throw runtime_error(field_name + " is not a valid field in the json structure");
 }
 
 uint32_t RESTAPI::parseUint32Field(Json::Value const& json, string const& field_name)
@@ -156,9 +159,17 @@ uint32_t RESTAPI::parseUint32Field(Json::Value const& json, string const& field_
     }
 }
 
-uint64_t RESTAPI::parseUint64Field(Json::Value const& json, string const& field_name)
+uint64_t RESTAPI::parseUint64Field(Json::Value const& json,
+    string const& field_name,
+    std::optional<uint64_t> default_value)
 {
-    throwOnInvalidFieldName(json, field_name);
+    if (!json.isMember(field_name)) {
+        if (default_value) {
+            return default_value.value();
+        }
+
+        throwFieldNameInvalid(field_name);
+    }
 
     string value = json[field_name].asString();
     try {
