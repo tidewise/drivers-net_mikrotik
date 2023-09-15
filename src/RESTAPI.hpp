@@ -1,6 +1,8 @@
 #ifndef NET_MIKROTIK_RESTAPI_HPP
 #define NET_MIKROTIK_RESTAPI_HPP
 
+#include <optional>
+
 #include "InterfaceStats.hpp"
 #include "RESTAPIConfig.hpp"
 #include "restclient-cpp/connection.h"
@@ -97,6 +99,10 @@ namespace net_mikrotik {
         static void throwOnInvalidFieldName(Json::Value const& json,
             std::string const& field_name);
 
+        /** @brief throws an exception that indicatest that the given field does not exist
+         */
+        static void throwFieldNameInvalid(std::string const& field_name);
+
         /**
          * @brief Throws whenever the response code is different from 200. We
          * treat any other code as failure, since all we do is a GET request.
@@ -146,7 +152,8 @@ namespace net_mikrotik {
          * @return uint64_t the parsed value.
          */
         static uint64_t parseUint64Field(Json::Value const& json,
-            std::string const& field_name);
+            std::string const& field_name,
+            std::optional<uint64_t> default_value = std::optional<uint64_t>());
 
         /**
          * @brief Parses a string value read from a json field into bool.

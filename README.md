@@ -1,48 +1,43 @@
-net_mikrotik
-=============
-Monitoring libraries for network devices
+# drivers/net_mikrotik
 
+Monitoring libraries for Mikrotik devices
 
+This library allows to query the REST API offered by RouterOS 7 devices, returning
+monitoring data about the devices. It is currently rather limited, focussing on the
+state of the ethernet interfaces.
 
-License
--------
-dummy-license
+## Mikrotik setup
 
-Installation
-------------
-The easiest way to build and install this package is to use Rock's build system.
-See [this page](http://rock-robotics.org/documentation/installation.html)
-on how to install Rock.
+The library works only with RouterOS 7. RouterOS 6 does not have a REST API.
+Documentation on how to enable the REST API is
+[here](https://help.mikrotik.com/docs/display/ROS/REST+API), but in a nutshell:
 
-However, if you feel that it's too heavy for your needs, Rock aims at having
-most of its "library" packages (such as this one) to follow best practices. See
-[this page](http://rock-robotics.org/documentation/packages/outside_of_rock.html)
-for installation instructions outside of Rock.
+- create a user with only the read and api permissions, for instance:
 
-Rock CMake Macros
------------------
+  ~~~
+  /user group
+  add name=api-readonly policy=api,read
+  /user
+  add name=syskit-monitoring group=api-readonly password=SOMEPASSWORD
+  ~~~
 
-This package uses a set of CMake helper shipped as the Rock CMake macros.
-Documentations is available on [this page](http://rock-robotics.org/documentation/packages/cmake_macros.html).
+- make sure the www-ssl service is enabled
 
-Rock Standard Layout
---------------------
+  ~~~
+  /ip service www-ssl disabled=no
+  ~~~
 
-This directory structure follows some simple rules, to allow for generic build
-processes and simplify reuse of this project. Following these rules ensures that
-the Rock CMake macros automatically handle the project's build process and
-install setup properly.
+- create a self-signed certificate for the www-ssl service if you don't have one
+  ~~~
+  /certificate
+  add name=ca-self-signed-template common-name=ca-self-signed key-usage=key-cert-sign,crl-sign
+  add name=router-template common-name=$IP subject-alt-name="IP:$IP
+  /certificate
+  sign ca-self-signed-template ca-crl-host=$IP name=ca-self-signed
+  sign router-template ca=ca-self-signed name=router
+  set ca-self-signed trusted=yes
+  set router trusted=yes
 
-### Folder Structure
-
-| directory         |       purpose                                                        |
-| ----------------- | ------------------------------------------------------               |
-| src/              | Contains all header (*.h/*.hpp) and source files                     |
-| build/ *          | The target directory for the build process, temporary content        |
-| bindings/         | Language bindings for this package, e.g. put into subfolders such as |
-| ruby/             | Ruby language bindings                                               |
-| viz/              | Source files for a vizkit plugin / widget related to this library    |
-| resources/        | General resources such as images that are needed by the program      |
-| configuration/    | Configuration files for running the program                          |
-| external/         | When including software that needs a non standard installation process, or one that can be easily embedded include the external software directly here |
-| doc/              | should contain the existing doxygen file: doxygen.conf               |
+  /ip service
+  set www-ssl certificate=router
+  ~~~
