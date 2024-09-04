@@ -174,6 +174,18 @@ namespace net_mikrotik {
          */
         static base::Time parseTimeField(Json::Value const& json,
             std::string const& field_name);
+
+        /**
+         * @brief Auto selects the time format based on the data received from the router.
+         *
+         * Currently only supports two formats:
+         *      %b/%d/%Y %T
+         *      %Y-%m-%d %T
+         *
+         * @param value the time data received
+         * @return the time format.
+         */
+        static std::string autoSelectTimeFormat(std::string const& value);
     };
 
 } // end namespace net_mikrotik
