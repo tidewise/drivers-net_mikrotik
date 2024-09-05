@@ -192,6 +192,18 @@ bool RESTAPI::parseBooleanField(Json::Value const& json, string const& field_nam
     return value == "true";
 }
 
+string RESTAPI::autoSelectTimeFormat(string const& value)
+{
+    auto slash_in_value = value.find("/");
+    if (slash_in_value != string::npos) {
+        // sep/03/2024 16:42:42
+        return "%b/%d/%Y %T";
+    }
+
+    // 2024-09-03 16:42:42
+    return "%Y-%m-%d %T";
+}
+
 Time RESTAPI::parseTimeField(Json::Value const& json, string const& field_name)
 {
     if (!json.isMember(field_name)) {
@@ -199,9 +211,10 @@ Time RESTAPI::parseTimeField(Json::Value const& json, string const& field_name)
     }
 
     string value = json[field_name].asString();
+    auto time_format = autoSelectTimeFormat(value);
     try {
         // Add Z to the time string to treat it as UTC
-        return Time::fromString(value + "Z", Resolution::Seconds, "%b/%d/%Y %T");
+        return Time::fromString(value + "Z", Resolution::Seconds, time_format);
     }
     catch (runtime_error const& err) {
         throw runtime_error(detailedParsingErrorMessage(field_name, value, err.what()));

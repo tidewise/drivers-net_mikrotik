@@ -248,6 +248,27 @@ TEST_F(RESTAPITest, it_throws_when_there_is_the_value_is_out_of_range)
         out_of_range);
 }
 
+TEST_F(RESTAPITest, it_throws_when_the_time_format_is_not_supported)
+{
+    auto api = RESTAPI();
+
+    auto resource_dir = getenv("NET_MIKROTIK_RESOURCE_DIR");
+    stringstream rest_responses;
+    rest_responses << resource_dir << "rest_responses.json";
+    ifstream file(rest_responses.str(), ifstream::binary);
+
+    Json::FastWriter writer;
+    Json::Value root;
+    file >> root;
+
+    root[0]["last-link-up-time"] = "10/feb/1070 16:42:42";
+
+    RestClient::Response response;
+    response.code = 200;
+    response.body = writer.write(root);
+    ASSERT_THROW({ api.parseInterfaceResponse(response); }, runtime_error);
+}
+
 TEST_F(RESTAPITest, it_doesnt_throw_when_last_link_up_time_field_is_not_present)
 {
     auto api = RESTAPI();
