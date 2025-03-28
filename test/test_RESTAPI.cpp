@@ -89,7 +89,7 @@ TEST_F(RESTAPITest, it_is_able_to_establish_a_connection_to_google)
     auto api = RESTAPI();
 
     RESTAPIConfig config;
-    config.timeout = base::Time::fromSeconds(1);
+    config.timeout = base::Time::fromSeconds(5);
 
     auto* connection = api.setupConnection("www.google.com", config);
     auto response = connection->get("");

@@ -1,4 +1,5 @@
 #include "RESTAPI.hpp"
+#include <cmath>
 #include <sstream>
 
 using namespace net_mikrotik;
@@ -26,7 +27,7 @@ RestClient::Connection* RESTAPI::setupConnection(std::string const& url,
 {
     auto* connection = new RestClient::Connection(url);
     connection->SetBasicAuth(config.user, config.password);
-    connection->SetTimeout(static_cast<int>(config.timeout.toSeconds()));
+    connection->SetTimeout(std::lround(config.timeout.toSeconds()));
 
     RestClient::HeaderFields headers{};
     headers["content-type"] = "application/json";
